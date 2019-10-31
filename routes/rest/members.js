@@ -14,7 +14,9 @@ module.exports = serviceTeam => {
           res.status(500).json({errors: [err.message]})
         }
       }
-      res.json(members)
+      else{
+        res.json(members)
+      }
     })
   })
   return router

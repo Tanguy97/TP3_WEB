@@ -53,6 +53,7 @@ module.exports = servicePublication => {
     let venue = req.body.venue
     const publication = { title: title, month: month, year: year, authors: authors, venue: venue }
     servicePublication.createPublication(publication)((err, publications) => {
+
       if (err) {
         if (req.app.locals.t['ERRORS']['’PUB_CREATE_ERROR'] != undefined) {
           res.status(500).send({ errors: [req.app.locals.t['ERRORS']['PUBS_ERROR']] })
