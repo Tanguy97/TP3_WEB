@@ -30,7 +30,7 @@ module.exports = servicePublication => {
           res.status(500).json({ errors: [err.message] })
         }
       }
-      if(publication===undefined){
+      if(publications===undefined){
         res.json([])
       }
       else res.json(publications)
@@ -55,7 +55,7 @@ module.exports = servicePublication => {
     servicePublication.createPublication(publication)((err, publications) => {
       //error code 400 bad request
       if (title == undefined || month === undefined || year == undefined || authors == undefined || venue == undefined)
-        res.status(400).send({ errors: req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] })
+        res.status(500).send({ errors: req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] })
       if (title.length < 5)
         res.status(400).send({ errors: req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] })
       if (month > 0 && month > 11)

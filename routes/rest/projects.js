@@ -8,7 +8,12 @@ module.exports = (serviceProjects, servicePublication) => {
   router.get('/',(req,res,next)=>{
     serviceProjects.getProjects("fr")((err,projects)=>{
       if(err){
-        res.status(500).json({errors: [err.message]})
+        if(req.app.locals.t['ERRORS']['PROJECTS_ERROR']!=undefined){
+          res.status(500).json({errors: [req.app.locals.t['ERRORS']['PROJECTS_ERROR']]})
+        }
+        else{
+          res.status(500).json({errors: [err.message]})
+        }
       }
       else{
         if(projects===undefined){
