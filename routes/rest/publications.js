@@ -30,7 +30,11 @@ module.exports = servicePublication => {
           res.status(500).json({ errors: [err.message] })
         }
       }
-      res.json(publications)
+      if(publication===undefined){
+        res.json([])
+      }
+      else res.json(publications)
+
     })
   })
 
