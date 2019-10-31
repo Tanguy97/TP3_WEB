@@ -53,19 +53,7 @@ module.exports = servicePublication => {
     let venue = req.body.venue
     const publication = { title: title, month: month, year: year, authors: authors, venue: venue }
     servicePublication.createPublication(publication)((err, publications) => {
-      //error code 400 bad request
-      if (title == undefined || month === undefined || year == undefined || authors == undefined || venue == undefined)
-        res.status(500).send({ errors: req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] })
-      if (title.length < 5)
-        res.status(400).send({ errors: req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] })
-      if (month > 0 && month > 11)
-        res.status(400).send({ errors: req.app.locals.t['ERRORS']['MONTH_ERROR_FORM'] })
-      if (year > 0)
-        res.status(400).send({ errors: req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM'] })
-      if (venue.length < 5)
-        res.status(400).send({ errors: req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM'] })
-      if (est_vide(authors))
-        res.status(400).send({ errors: req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] })
+
       if (err) {
         if (req.app.locals.t['ERRORS']['’PUB_CREATE_ERROR'] != undefined) {
           res.status(500).send({ errors: [req.app.locals.t['ERRORS']['PUBS_ERROR']] })
@@ -74,7 +62,22 @@ module.exports = servicePublication => {
           res.status(500).send({ errors: [err.message] })
         }
       }
-      else res.status(201).send(publication)
+
+      if (title == undefined || month === undefined || year == undefined || authors == undefined || venue == undefined || publication==undefined)
+        res.status(400).send({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
+      //error code 400 bad request
+      if (title.length < 5)
+        res.status(400).send({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] ]})
+      if (month > 0 && month > 11)
+        res.status(400).send({ errors: [eq.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
+      if (year > 0)
+        res.status(400).send({ errors:[ req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM']] })
+      if (venue.length < 5)
+        res.status(400).send({ errors: [req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM']] })
+      if (est_vide(authors))
+        res.status(400).send({ errors: [req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
+
+      res.status(201).send(publication)
     })
   })
   return router
