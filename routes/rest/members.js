@@ -17,7 +17,7 @@ module.exports = serviceTeam => {
           res.status(500).json({errors: [req.app.locals.t['ERRORS']['MEMBERS_ERROR']]})
         }
         else{
-          res.status(500).json(err.message)
+          res.status(500).json({errors: [err.message]})
         }
 >>>>>>> b68e6cf3a153e5534db8a392504293d8503210fa
       }
