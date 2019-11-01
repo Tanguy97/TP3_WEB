@@ -19,7 +19,16 @@ module.exports = (serviceProjects, servicePublication) => {
         if(projects===undefined){
           res.json([])
         }
-        res.json(projects)
+        else{
+          projects = projects.map(currentProject =>{
+            const formatProject = {project: currentProject,publications: []}
+            servicePublication.getPublicationsByIds(currentProject["publications"])((err,publications)=>{
+              formatProject["publications"]=publications
+            })
+            return formatProject
+          })
+          res.json(projects)
+        }
       }
     })
   })
@@ -45,7 +54,11 @@ module.exports = (serviceProjects, servicePublication) => {
         }
       }
       else{
-        res.json(project)
+        const formatProject = {project: project,publications:[]}
+        servicePublication.getPublicationsByIds(project["publications"])((err,publications)=>{
+          formatProject["publications"]=publications
+        })
+        res.json(formatProject)
       }
     })
   })
