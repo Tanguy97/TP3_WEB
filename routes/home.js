@@ -5,7 +5,12 @@ const moment = require('moment')
 
 // À COMPLÉTER
 router.get('/',(req,res,next)=>{
-  const url = 'http://localhost:3000/api/feed'
+  let langue = req.query.clang
+  if(langue===undefined){
+    langue='fr'
+  }
+  moment.locale(langue)
+  const url = 'http://localhost:3000/api/feed?clang='+langue
   request.get(url,(err,resultat,body)=>{
      const feeds = JSON.parse(body)
      res.render('index.pug',{"feeds": feeds})

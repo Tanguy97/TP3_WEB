@@ -6,7 +6,11 @@ module.exports = (serviceProjects, servicePublication) => {
 
   // À COMPLÉTER
   router.get('/',(req,res,next)=>{
-    serviceProjects.getProjects("fr")((err,projects)=>{
+    let langue = req.query.clang
+    if(langue===undefined){
+      langue = 'fr'
+    }
+    serviceProjects.getProjects(langue)((err,projects)=>{
       if(err){
         if(req.app.locals.t['ERRORS']['PROJECTS_ERROR']!=undefined){
           res.status(500).json({errors: [req.app.locals.t['ERRORS']['PROJECTS_ERROR']]})
@@ -34,7 +38,11 @@ module.exports = (serviceProjects, servicePublication) => {
   })
 
   router.get('/:id',(req,res,next)=>{
-    serviceProjects.getProjectById(req.app.locals.t)("fr")(req.params.id)((err,project)=>{
+    let langue = req.query.clang
+    if(langue===undefined){
+      langue = 'fr'
+    }
+    serviceProjects.getProjectById(req.app.locals.t)(langue)(req.params.id)((err,project)=>{
       if(err){
         if(err.name==='NOT_FOUND') {
           if(req.app.locals.t['ERRORS']['PROJECT_NOT_FOUND']!=undefined){

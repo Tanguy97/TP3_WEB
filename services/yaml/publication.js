@@ -86,16 +86,18 @@ const removePublication = fs => id => callback => {
  *  @returns Valeurs de comparaison -1, 1 ou 0
  */
 const comparePublications = pagingOpts => (p1, p2) => {
-  if(pagingOpts.sorting!=undefined){
-    return pagingOpts.sorting.reduce((acc, sort) => {
-      if (acc === 0) {
-        const field = sort[0]
-        const order = sort[1]
-        const compare = p1[field] < p2[field] ? -1 : p1[field] > p2[field] ? 1 : 0
-        return order === 'asc' ? compare : order === 'desc' ? -compare : compare
-      }
-      return acc
-    }, 0)
+  if(pagingOpts!=undefined){
+    if(pagingOpts.sorting!=undefined){
+      return pagingOpts.sorting.reduce((acc, sort) => {
+        if (acc === 0) {
+          const field = sort[0]
+          const order = sort[1]
+          const compare = p1[field] < p2[field] ? -1 : p1[field] > p2[field] ? 1 : 0
+          return order === 'asc' ? compare : order === 'desc' ? -compare : compare
+        }
+        return acc
+      }, 0)
+    }
   }
 }
 
