@@ -13,4 +13,16 @@ router.get('/',(req,res,next)=>{
     res.render('projects.pug',{"projects": projects})
   })
 })
+
+router.get('/:id',(req,res,next)=>{
+  const id = req.params.id
+  const url = 'http://localhost:3000/api/projects/' + id
+  request.get(url,(err,resultat,body)=>{
+    if(err){
+      next(err)
+    }
+    const project= JSON.parse(body)
+    res.render('project.pug',project)
+  })
+})
 module.exports = router
