@@ -86,6 +86,7 @@ const removePublication = fs => id => callback => {
  *  @returns Valeurs de comparaison -1, 1 ou 0
  */
 const comparePublications = pagingOpts => (p1, p2) => {
+  if(pagingOpts.sorting===undefined) return 0
   return pagingOpts.sorting.reduce((acc, sort) => {
     if (acc === 0) {
       const field = sort[0]
