@@ -67,8 +67,8 @@ module.exports = servicePublication => {
         //error code 400 bad request
         else if (title.length < 5)
           res.status(400).send({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] ]})
-        else if (month > 0 && month > 11)
-          res.status(400).send({ errors: [eq.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
+        else if (month < 0 && month > 11)
+          res.status(400).send({ errors: [req.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
         else if (year > 0)
           res.status(400).send({ errors:[ req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM']] })
         else if (venue.length < 5)
