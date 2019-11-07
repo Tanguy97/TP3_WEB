@@ -16,11 +16,11 @@ module.exports = serviceFeed => {
             res.status(500).json({errors: [req.app.locals.t['ERRORS']['FEEDS_ERROR']]})
           }
           else{
-            res.status(500).json({errors: err.message})
+            res.status(500).json({errors: [err.message]})
           }
         }
         else{
-          res.status(500).json({errors: err.message})
+          res.status(500).json({errors: [err.message]})
         }
       }
       else{

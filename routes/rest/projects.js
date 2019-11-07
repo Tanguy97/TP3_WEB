@@ -63,7 +63,7 @@ module.exports = (serviceProjects, servicePublication) => {
           }
         }
         else{
-          if(req.locals.t!=undefined){
+          if(req.app.locals.t['ERRORS']!=undefined){
             if(req.app.locals.t['ERRORS']['PROJECT_ERROR']!=undefined){
               res.status(500).json({errors: [req.app.locals.t['ERRORS']['PROJECT_ERROR']]})
             }
