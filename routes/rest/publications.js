@@ -56,9 +56,9 @@ module.exports = servicePublication => {
     let year = req.body.year
     let authors = req.body.authors
     let venue = req.body.venue
-
+    console.log(title,month,year,authors,venue)
+    
     if (title == undefined || month === undefined || year == undefined || authors == undefined || venue == undefined ){
-      console.log(title)
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
@@ -71,7 +71,6 @@ module.exports = servicePublication => {
     //error code 400 bad request
 
     else if (title.length < 5){
-      console.log(title)
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM']] })
@@ -83,7 +82,7 @@ module.exports = servicePublication => {
     }
 
     else if (month < 0 && month > 11){
-      console.log(month)
+      
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['MONTH_ERROR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
@@ -95,7 +94,6 @@ module.exports = servicePublication => {
     }
 
     else if( year.toString().match(/[0-9]+/g)===null){
-      console.log(year)
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM']] })
@@ -107,7 +105,6 @@ module.exports = servicePublication => {
     }
 
     else if (venue.length < 5){
-      console.log(venue)
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM']] })
@@ -118,8 +115,7 @@ module.exports = servicePublication => {
       else res.status(400).json({ errors: ['ERROR3_VENUE_AT_LEAST_5_CHAR_FORM!!!!!'] })
     }
 
-    else if (est_vide(authors)){
-      console.log(authors)
+    else if (est_vide(authors) || authors.length==0){
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['AUTHOR_EMPTY_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['AUTHOR_EMPTY_FORM']] })
@@ -132,9 +128,7 @@ module.exports = servicePublication => {
 
     else {
       const publication = { title: title, month: month, year: year, authors: authors, venue: venue }
-
       servicePublication.createPublication(publication)((err, publications) => {
-
       if (err){
         if(req.app.locals.t!==undefined){
           if( req.app.locals.t['ERRORS'] !==undefined) {
