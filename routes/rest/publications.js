@@ -32,7 +32,7 @@ module.exports = servicePublication => {
         }
         else res.status(500).json({ errors: [err.message] })
       }
-      
+
       else {
         servicePublication.getNumberOfPublications((err,numberPublication)=>{
           if(numberPublication===0) res.json({count:0, publications:[]})
@@ -62,60 +62,60 @@ module.exports = servicePublication => {
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
-          else res.status(400).json({ errors: ['ERROR1!!!!!'] })
+          else res.status(400).json({ errors: ['ERROR1_PUB_CREATE_ERROR!!!!!'] })
         }
-        else res.status(400).json({ errors: ['ERROR2!!!!!'] })
+        else res.status(400).json({ errors: ['ERROR2_PUB_CREATE_ERROR!!!!!'] })
       }
-      else res.status(400).json({ errors: ['ERROR3!!!!!'] })
+      else res.status(400).json({ errors: ['ERROR3_PUB_CREATE_ERROR!!!!!'] })
     }
     //error code 400 bad request
-    
+
     else if (title.length < 5){
       console.log(title)
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM']] })
-          else res.status(400).json({ errors: ['ERROR1!!!!!'] })
+          else res.status(400).json({ errors: ['ERROR1_PUB_AT_LEAST_5_CHAR_FORM!!!!!'] })
         }
-        else res.status(400).json({ errors: ['ERROR2!!!!!'] })
+        else res.status(400).json({ errors: ['ERROR2_PUB_AT_LEAST_5_CHAR_FORM!!!!!'] })
       }
-      else res.status(400).json({ errors: ['ERROR3!!!!!'] })
+      else res.status(400).json({ errors: ['ERROR3_PUB_AT_LEAST_5_CHAR_FORM!!!!!'] })
     }
-     
+
     else if (month < 0 && month > 11){
       console.log(month)
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['MONTH_ERROR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
-          else res.status(400).json({ errors: ['ERROR1!!!!!'] })
+          else res.status(400).json({ errors: ['ERROR1_MONTH_ERROR_FORM!!!!!'] })
         }
-        else res.status(400).json({ errors: ['ERROR2!!!!!'] })
+        else res.status(400).json({ errors: ['ERROR2_MONTH_ERROR_FORM!!!!!'] })
       }
-      else res.status(400).json({ errors: ['ERROR3!!!!!'] })
+      else res.status(400).json({ errors: ['ERROR3_MONTH_ERROR_FORM!!!!!'] })
     }
-      
+
     else if( year.toString().match(/[0-9]+/g)===null){
       console.log(year)
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM']] })
-          else res.status(400).json({ errors: ['ERROR1!!!!!'] })
+          else res.status(400).json({ errors: ['ERROR1_YEAR_NOT_INT_FORM!!!!!'] })
         }
-        else res.status(400).json({ errors: ['ERROR2!!!!!'] })
+        else res.status(400).json({ errors: ['ERROR2_YEAR_NOT_INT_FORM!!!!!'] })
       }
-      else res.status(400).json({ errors: ['ERROR3!!!!!'] })
+      else res.status(400).json({ errors: ['ERROR3_YEAR_NOT_INT_FORM!!!!!'] })
     }
-      
+
     else if (venue.length < 5){
       console.log(venue)
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM']] })
-          else res.status(400).json({ errors: ['ERROR1!!!!!'] })
+          else res.status(400).json({ errors: ['ERROR1_VENUE_AT_LEAST_5_CHAR_FORM!!!!!'] })
         }
-        else res.status(400).json({ errors: ['ERROR2!!!!!'] })
+        else res.status(400).json({ errors: ['ERROR2_VENVENUE_AT_LEAST_5_CHAR_FORMUE_AT_LEAST_5_CHAR_FORM!!!!!'] })
       }
-      else res.status(400).json({ errors: ['ERROR3!!!!!'] })
+      else res.status(400).json({ errors: ['ERROR3_VENUE_AT_LEAST_5_CHAR_FORM!!!!!'] })
     }
 
     else if (est_vide(authors)){
@@ -123,11 +123,11 @@ module.exports = servicePublication => {
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['AUTHOR_EMPTY_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['AUTHOR_EMPTY_FORM']] })
-          else res.status(400).json({ errors: ['ERROR1!!!!!'] })
+          else res.status(400).json({ errors: ['ERROR1_AUTHOR_EMPTY_FORM!!!!!'] })
         }
-        else res.status(400).json({ errors: ['ERROR2!!!!!'] })
+        else res.status(400).json({ errors: ['ERROR2_AUTHOR_EMPTY_FORM!!!!!'] })
       }
-      else res.status(400).json({ errors: ['ERROR3!!!!!'] })
+      else res.status(400).json({ errors: ['ERROR3_AUTHOR_EMPTY_FORM!!!!!'] })
     }
 
     else {
@@ -148,7 +148,7 @@ module.exports = servicePublication => {
       else res.status(201).send()
       })
     }
-    
+
   })
 
   router.delete('/:id', (req, res, next) => {
