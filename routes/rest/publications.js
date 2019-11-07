@@ -30,10 +30,12 @@ module.exports = servicePublication => {
           res.status(500).json({ errors: [err.message] })
         }
       }
-      if(publications===undefined){
-        res.json({ count: 0, publications: [] } )
+      else {
+        servicePublication.getNumberOfPublications((err,numberPublication)=>{
+          if(numberPublication===0) res.json({count:0, publications:[]})
+          else res.json({count:numberPublication,publication:publications})
+        })
       }
-      else res.json(publications)
 
     })
   })
@@ -56,28 +58,28 @@ module.exports = servicePublication => {
 
       if (err) {
         if (req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] != undefined) {
-          res.status(500).send({ errors: [req.app.locals.t['ERRORS']['PUBS_ERROR']] })
+          res.status(500).json({ errors: [req.app.locals.t['ERRORS']['PUBS_ERROR']] })
         }
         else {
-          res.status(500).send({ errors: [err.message] })
+          res.status(500).json({ errors: [err.message] })
         }
       }
       else{
-        if(publications===undefined ) res.status(400).send({ errors:[ req.app.locals.t['ERRORS']['EMPTY_PUBLICATION_FORM'] ]})
+        if(publications===undefined ) res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['EMPTY_PUBLICATION_FORM'] ]})
         else if (title == undefined || month === undefined || year == undefined || authors == undefined || venue == undefined || publication==undefined)
-          res.status(400).send({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
+          res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
         //error code 400 bad request
         else if (title.length < 5)
-          res.status(400).send({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] ]})
+          res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] ]})
         else if (month > 0 && month > 11)
-          res.status(400).send({ errors: [req.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
-        else if (!year.match(/[0-9]+/g))
-          res.status(400).send({ errors:[ req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM']] })
+          res.status(400).json({ errors: [req.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
+        else if (year.match(/[0-9]+/g))
+          res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM']] })
         else if (venue.length < 5)
-          res.status(400).send({ errors: [req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM']] })
+          res.status(400).json({ errors: [req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM']] })
         else if (est_vide(authors))
-          res.status(400).send({ errors: [req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
-        else res.status(201).send(publication)
+          res.status(400).json({ errors: [req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
+        else res.status(201).json(publication)
       }
 
     })
@@ -86,20 +88,19 @@ module.exports = servicePublication => {
   router.delete('/:id', (req, res, next) => {
     servicePublication.getPublicationsByIds(req.params.id)((err, publication) => {
       if(publication===undefined)
-        res.status(404).send({ errors: [req.app.locals.t['ERRORS']['PUBS_NOT_FOUND_ERROR']] })
+        res.status(404).json({ errors: [req.app.locals.t['ERRORS']['PUBS_NOT_FOUND_ERROR']] })
     })
     servicePublication.removePublication(req.params.id)((err) => {
       if (err) {
         if (req.app.locals.t['ERRORS']['PUB_DELETE_ERROR'] != undefined) {
-          res.status(500).send({ errors: [req.app.locals.t['ERRORS']['PUBS_ERROR']] })
+          res.status(500).json({ errors: [req.app.locals.t['ERRORS']['PUBS_ERROR']] })
         }
         else {
-          res.status(500).send({ errors: [err.message] })
+          res.status(500).json({ errors: [err.message] })
         }
       }
-      else
-      res.status(200).send()
-    })
+      else res.status(200).send()
   })
-  return router
+})
+return router
 }
