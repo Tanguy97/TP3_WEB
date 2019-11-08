@@ -99,7 +99,7 @@ module.exports = servicePublication => {
       else res.status(400).json({ errors: ['ERROR3_PUB_AT_LEAST_5_CHAR_FORM!!!!!'] })
     }
 
-    else if (month===undefined||(month < 0 && month > 11) ){
+    else if (month===undefined||(month < 0 && month > 11)||month.toString().match(/[0-9]+/g)===null  ){
       
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
