@@ -25,7 +25,7 @@ module.exports = servicePublication => {
       if (err) {
         if(req.app.locals.t!==undefined){
           if( req.app.locals.t['ERRORS'] !==undefined) {
-            if (req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM'] ===undefined)  res.status(500).json({ errors: [req.app.locals.t['ERRORS']['PUBS_ERROR']] })
+            if (req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM'] !==undefined)  res.status(500).json({ errors: [req.app.locals.t['ERRORS']['PUBS_ERROR']] })
             else res.status(500).json({ errors: [err.message] })
           }
           else res.status(500).json({ errors: [err.message] })
@@ -62,11 +62,11 @@ module.exports = servicePublication => {
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
-          else res.status(400).json({ errors: ['ERROR!!!!!'] })
+          else res.status(400).json({ errors: ['ERROR1!!!!!'] })
         }
-        else res.status(400).json({ errors: ['ERROR!!!!!'] })
+        else res.status(400).json({ errors: ['ERROR2!!!!!'] })
       }
-      else res.status(400).json({ errors: ['ERROR!!!!!'] })
+      else res.status(400).json({ errors: ['ERROR3!!!!!'] })
     }
     //error code 400 bad request
     
@@ -75,11 +75,11 @@ module.exports = servicePublication => {
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM']] })
-          else res.status(400).json({ errors: ['ERROR!!!!!'] })
+          else res.status(400).json({ errors: ['ERROR1!!!!!'] })
         }
-        else res.status(400).json({ errors: ['ERROR!!!!!'] })
+        else res.status(400).json({ errors: ['ERROR2!!!!!'] })
       }
-      else res.status(400).json({ errors: ['ERROR!!!!!'] })
+      else res.status(400).json({ errors: ['ERROR3!!!!!'] })
     }
      
     else if (month < 0 && month > 11){
@@ -87,11 +87,11 @@ module.exports = servicePublication => {
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['MONTH_ERROR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
-          else res.status(400).json({ errors: ['ERROR!!!!!'] })
+          else res.status(400).json({ errors: ['ERROR1!!!!!'] })
         }
-        else res.status(400).json({ errors: ['ERROR!!!!!'] })
+        else res.status(400).json({ errors: ['ERROR2!!!!!'] })
       }
-      else res.status(400).json({ errors: ['ERROR!!!!!'] })
+      else res.status(400).json({ errors: ['ERROR3!!!!!'] })
     }
       
     else if( year.toString().match(/[0-9]+/g)===null){
@@ -99,11 +99,11 @@ module.exports = servicePublication => {
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM']] })
-          else res.status(400).json({ errors: ['ERROR!!!!!'] })
+          else res.status(400).json({ errors: ['ERROR1!!!!!'] })
         }
-        else res.status(400).json({ errors: ['ERROR!!!!!'] })
+        else res.status(400).json({ errors: ['ERROR2!!!!!'] })
       }
-      else res.status(400).json({ errors: ['ERROR!!!!!'] })
+      else res.status(400).json({ errors: ['ERROR3!!!!!'] })
     }
       
     else if (venue.length < 5){
@@ -111,23 +111,23 @@ module.exports = servicePublication => {
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM']] })
-          else res.status(400).json({ errors: ['ERROR!!!!!'] })
+          else res.status(400).json({ errors: ['ERROR1!!!!!'] })
         }
-        else res.status(400).json({ errors: ['ERROR!!!!!'] })
+        else res.status(400).json({ errors: ['ERROR2!!!!!'] })
       }
-      else res.status(400).json({ errors: ['ERROR!!!!!'] })
+      else res.status(400).json({ errors: ['ERROR3!!!!!'] })
     }
 
     else if (est_vide(authors)){
       console.log(authors)
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
-          if (req.app.locals.t['ERRORS']['AUTHOR_EMPTY_ERROR'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['AUTHOR_EMPTY_ERROR']] })
-          else res.status(400).json({ errors: ['ERROR!!!!!'] })
+          if (req.app.locals.t['ERRORS']['AUTHOR_EMPTY_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['AUTHOR_EMPTY_FORM']] })
+          else res.status(400).json({ errors: ['ERROR1!!!!!'] })
         }
-        else res.status(400).json({ errors: ['ERROR!!!!!'] })
+        else res.status(400).json({ errors: ['ERROR2!!!!!'] })
       }
-      else res.status(400).json({ errors: ['ERROR!!!!!'] })
+      else res.status(400).json({ errors: ['ERROR3!!!!!'] })
     }
 
     else {
