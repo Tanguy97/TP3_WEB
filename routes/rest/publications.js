@@ -70,7 +70,7 @@ module.exports = servicePublication => {
     }
     //error code 400 bad request
 
-    else if (title.length < 5 || titre ===undefined){
+    else if (title.length < 5 || title === undefined){
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM']] })
@@ -115,7 +115,7 @@ module.exports = servicePublication => {
       else res.status(400).json({ errors: ['ERROR3_VENUE_AT_LEAST_5_CHAR_FORM!!!!!'] })
     }
 
-    else if (est_vide(authors) || authors.length==0 ||authors==undefined){
+    else if (est_vide(authors) || authors.length==0 || authors==undefined){
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['AUTHOR_EMPTY_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['AUTHOR_EMPTY_FORM']] })
