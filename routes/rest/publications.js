@@ -51,11 +51,20 @@ module.exports = servicePublication => {
   }
 
   router.post('/', (req, res, next) => {
-    let title = req.body.title
-    let month = req.body.month
-    let year = req.body.year
-    let authors = req.body.authors
-    let venue = req.body.venue
+    if(body!=undefined){
+      let title = req.body.title
+      let month = req.body.month
+      let year = req.body.year
+      let authors = req.body.authors
+      let venue = req.body.venue
+    }
+    else{
+      title = undefined
+      month = undefined
+      year = undefined
+      authors = undefined
+      venue = undefined
+    }
     console.log(title,month,year,authors,venue)
     
     if (title == undefined && month === undefined && year == undefined && authors == undefined && venue == undefined ){
@@ -70,7 +79,7 @@ module.exports = servicePublication => {
     }
     //error code 400 bad request
 
-    else if (month===undefined||title.length < 5 ){
+    else if (title===undefined||title.length < 5 ){
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM']] })
