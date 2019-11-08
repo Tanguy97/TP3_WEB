@@ -63,21 +63,15 @@ module.exports = servicePublication => {
         }
       }
       else{
-        if(publications===undefined ) res.status(400).send([])
+        if(publications===undefined ) res.status(400).send({ errors:[ req.app.locals.t['ERRORS']['EMPTY_PUBLICATION_FORM'] ]})
         else if (title == undefined || month === undefined || year == undefined || authors == undefined || venue == undefined || publication==undefined)
           res.status(400).send({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
         //error code 400 bad request
         else if (title.length < 5)
           res.status(400).send({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] ]})
-<<<<<<< HEAD
-        else if (month < 0 && month > 11)
-          res.status(400).send({ errors: [req.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
-        else if (year > 0)
-=======
         else if (month > 0 && month > 11)
           res.status(400).send({ errors: [req.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
         else if (!year.match(/[0-9]+/g))
->>>>>>> a7605a719a42ed3608807dbcbbdb0c5baf99b79c
           res.status(400).send({ errors:[ req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM']] })
         else if (venue.length < 5)
           res.status(400).send({ errors: [req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM']] })
