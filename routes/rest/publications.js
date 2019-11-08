@@ -63,18 +63,28 @@ module.exports = servicePublication => {
       authors = req.body.authors
       venue = req.body.venue
     }
+    else {
+      if(req.app.locals.t!==undefined){
+        if( req.app.locals.t['ERRORS'] !==undefined) {
+          if (req.app.locals.t['ERRORS']['EMPTY_PUBLICATION_FORM'] !==undefined)  res.status(500).json({ errors:[ req.app.locals.t['ERRORS']['EMPTY_PUBLICATION_FORM']] })
+          else res.status(400).json({ errors: ['ERROR1_PUB_CREATE_ERROR!!!!!'] })
+        }
+        else res.status(400).json({ errors: ['ERROR2_PUB_CREATE_ERROR!!!!!'] })
+      }
+      else res.status(400).json({ errors: ['ERROR3_PUB_CREATE_ERROR!!!!!'] })
+    }
 
     console.log(title,month,year,authors,venue)
     
     if (title == undefined && month === undefined && year == undefined && authors == undefined && venue == undefined ){
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
-          if (req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
-          else res.status(400).json({ errors: ['ERROR1_PUB_CREATE_ERROR!!!!!'] })
+          if (req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] !==undefined)  res.status(500).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
+          else res.status(500).json({ errors: ['ERROR1_PUB_CREATE_ERROR!!!!!'] })
         }
-        else res.status(400).json({ errors: ['ERROR2_PUB_CREATE_ERROR!!!!!'] })
+        else res.status(500).json({ errors: ['ERROR2_PUB_CREATE_ERROR!!!!!'] })
       }
-      else res.status(400).json({ errors: ['ERROR3_PUB_CREATE_ERROR!!!!!'] })
+      else res.status(500).json({ errors: ['ERROR3_PUB_CREATE_ERROR!!!!!'] })
     }
     //error code 400 bad request
 
