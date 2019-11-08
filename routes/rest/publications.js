@@ -53,8 +53,24 @@ module.exports = servicePublication => {
     let year = req.body.year
     let authors = req.body.authors
     let venue = req.body.venue
-    const publication = { title: title, month: month, year: year, authors: authors, venue: venue }
-    servicePublication.createPublication(publication)((err, publications) => {
+
+    if (title == undefined || month === undefined || year == undefined || authors == undefined || venue == undefined || publication==undefined)
+      res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
+    //error code 400 bad request
+    else if (title.length < 5)
+      res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] ]})
+    else if (month > 0 && month > 11)
+      res.status(400).json({ errors: [req.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
+    else if (year.match(/[0-9]+/g))
+      res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM']] })
+    else if (venue.length < 5)
+      res.status(400).json({ errors: [req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM']] })
+    else if (est_vide(authors))
+      res.status(400).json({ errors: [req.app.locals.t['ERRORS']['AUTHOR_EMPTY_ERROR']] })
+    else {
+      const publication = { title: title, month: month, year: year, authors: authors, venue: venue }
+
+      servicePublication.createPublication(publication)((err, publications) => {
 
       if (err) {
         if (req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] != undefined) {
@@ -64,27 +80,12 @@ module.exports = servicePublication => {
           res.status(500).json({ errors: [err.message] })
         }
       }
-      else{
-        if(publications===undefined ) res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['EMPTY_PUBLICATION_FORM'] ]})
-        else if (title == undefined || month === undefined || year == undefined || authors == undefined || venue == undefined || publication==undefined)
-          res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
-        //error code 400 bad request
-        else if (title.length < 5)
-          res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] ]})
-        else if (month > 0 && month > 11)
-          res.status(400).json({ errors: [req.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
-        else if (year.match(/[0-9]+/g))
-          res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM']] })
-        else if (venue.length < 5)
-          res.status(400).json({ errors: [req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM']] })
-        else if (est_vide(authors))
-          res.status(400).json({ errors: [req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
-        else res.status(201).json(publication)
-      }
-
-    })
-
+      else res.status(201).send()
+      })
+    }
+    
   })
+
   router.delete('/:id', (req, res, next) => {
     servicePublication.getPublicationsByIds(req.params.id)((err, publication) => {
       if(publication===undefined)
