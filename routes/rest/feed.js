@@ -11,13 +11,8 @@ module.exports = serviceFeed => {
     }
     serviceFeed.getFeeds()(langue)((err,feeds)=>{
       if(err){
-        if(req.app.locals.t!=undefined){
-          if(req.app.locals.t['ERRORS']['FEEDS_ERROR']!=undefined){
-            res.status(500).json({errors: [req.app.locals.t['ERRORS']['FEEDS_ERROR']]})
-          }
-          else{
-            res.status(500).json({errors: [err.message]})
-          }
+        if(req.app.locals.t!=undefined && req.app.locals.t['ERRORS']!=undefined && req.app.locals.t['ERRORS']['FEEDS_ERROR']!=undefined){
+          res.status(500).json({errors: [req.app.locals.t['ERRORS']['FEEDS_ERROR']]})
         }
         else{
           res.status(500).json({errors: [err.message]})
