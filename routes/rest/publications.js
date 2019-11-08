@@ -54,11 +54,16 @@ module.exports = servicePublication => {
     let authors = req.body.authors
     let venue = req.body.venue
 
-    if (title == undefined || month === undefined || year == undefined || authors == undefined || venue == undefined || publication==undefined)
+    if (title == undefined || month === undefined || year == undefined || authors == undefined || venue == undefined ){
       res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
+      console.log(title)
+    }
     //error code 400 bad request
-    else if (title.length < 5)
+    
+    else if (title.length < 5){
       res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] ]})
+      console.log(title)
+    }      
     else if (month > 0 && month > 11)
       res.status(400).json({ errors: [req.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
     else if (year.match(/[0-9]+/g))
@@ -90,18 +95,20 @@ module.exports = servicePublication => {
     servicePublication.getPublicationsByIds(req.params.id)((err, publication) => {
       if(publication===undefined)
         res.status(404).json({ errors: [req.app.locals.t['ERRORS']['PUBS_NOT_FOUND_ERROR']] })
+        else{
+          servicePublication.removePublication(req.params.id)((err) => {
+            if (err) {
+              if (req.app.locals.t['ERRORS']['PUB_DELETE_ERROR'] != undefined) {
+                res.status(500).json({ errors: [req.app.locals.t['ERRORS']['PUBS_ERROR']] })
+              }
+              else {
+                res.status(500).json({ errors: [err.message] })
+              }
+            }
+            else res.status(200).send()
+        })
+        }
     })
-    servicePublication.removePublication(req.params.id)((err) => {
-      if (err) {
-        if (req.app.locals.t['ERRORS']['PUB_DELETE_ERROR'] != undefined) {
-          res.status(500).json({ errors: [req.app.locals.t['ERRORS']['PUBS_ERROR']] })
-        }
-        else {
-          res.status(500).json({ errors: [err.message] })
-        }
-      }
-      else res.status(200).send()
-  })
 })
 return router
 }
