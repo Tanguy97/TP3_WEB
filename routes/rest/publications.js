@@ -86,34 +86,12 @@ module.exports = servicePublication => {
         else res.status(400).json({ errors: ['ERROR3_PUB_AT_LEAST_5_CHAR_FORM!!!!!'] })
       }
 
-      else if (month===undefined||(month < 0 && month > 11) ){
-
-        if(req.app.locals.t!==undefined){
-          if( req.app.locals.t['ERRORS'] !==undefined) {
-            if (req.app.locals.t['ERRORS']['MONTH_ERROR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
-            else res.status(400).json({ errors: ['ERROR1_MONTH_ERROR_FORM!!!!!'] })
-          }
-          else res.status(400).json({ errors: ['ERROR2_MONTH_ERROR_FORM!!!!!'] })
-        }
-        else res.status(400).json({ errors: ['ERROR3_MONTH_ERROR_FORM!!!!!'] })
-      }
-
-<<<<<<< HEAD
     else if (month===undefined||(month < 0 && month > 11)||month.toString().match(/[0-9]+/g)===null  ){
       
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['MONTH_ERROR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
           else res.status(400).json({ errors: ['ERROR1_MONTH_ERROR_FORM!!!!!'] })
-=======
-      else if( year===undefined ||year.toString().match(/[0-9]+/g)===null ){
-        if(req.app.locals.t!==undefined){
-          if( req.app.locals.t['ERRORS'] !==undefined) {
-            if (req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM']] })
-            else res.status(400).json({ errors: ['ERROR1_YEAR_NOT_INT_FORM!!!!!'] })
-          }
-          else res.status(400).json({ errors: ['ERROR2_YEAR_NOT_INT_FORM!!!!!'] })
->>>>>>> 2a19d99daf898cb34f094ba5f269ad812531c7b3
         }
         else res.status(400).json({ errors: ['ERROR3_YEAR_NOT_INT_FORM!!!!!'] })
       }
