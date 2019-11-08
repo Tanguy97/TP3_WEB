@@ -70,7 +70,7 @@ module.exports = servicePublication => {
     }
     //error code 400 bad request
 
-    else if (title.length < 5 || title === undefined){
+    else if (month===undefined||title.length < 5 ){
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM']] })
@@ -81,7 +81,7 @@ module.exports = servicePublication => {
       else res.status(400).json({ errors: ['ERROR3_PUB_AT_LEAST_5_CHAR_FORM!!!!!'] })
     }
 
-    else if ((month < 0 && month > 11)||month===undefined ){
+    else if (month===undefined||(month < 0 && month > 11) ){
       
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
@@ -93,7 +93,7 @@ module.exports = servicePublication => {
       else res.status(400).json({ errors: ['ERROR3_MONTH_ERROR_FORM!!!!!'] })
     }
 
-    else if( year.toString().match(/[0-9]+/g)===null || year===undefined){
+    else if( year===undefined ||year.toString().match(/[0-9]+/g)===null ){
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM']] })
@@ -104,7 +104,7 @@ module.exports = servicePublication => {
       else res.status(400).json({ errors: ['ERROR3_YEAR_NOT_INT_FORM!!!!!'] })
     }
 
-    else if (venue.length < 5 || venue===undefined){
+    else if (venue===undefined  || venue.length < 5){
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM']] })
@@ -115,7 +115,7 @@ module.exports = servicePublication => {
       else res.status(400).json({ errors: ['ERROR3_VENUE_AT_LEAST_5_CHAR_FORM!!!!!'] })
     }
 
-    else if (est_vide(authors) || authors.length==0 || authors==undefined){
+    else if (authors==undefined ||est_vide(authors)  ||  authors.length==0){
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
           if (req.app.locals.t['ERRORS']['AUTHOR_EMPTY_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['AUTHOR_EMPTY_FORM']] })
