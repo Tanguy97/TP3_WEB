@@ -12,8 +12,13 @@ module.exports = (serviceProjects, servicePublication) => {
     }
     serviceProjects.getProjects(langue)((err,projects)=>{
       if(err){
-        if(req.app.locals.t['ERRORS']['PROJECTS_ERROR']!=undefined){
-          res.status(500).json({errors: [req.app.locals.t['ERRORS']['PROJECTS_ERROR']]})
+        if(req.app.locals.t!=undefined){
+          if(req.app.locals.t['ERRORS']['PROJECTS_ERROR']!=undefined){
+            res.status(500).json({errors: [req.app.locals.t['ERRORS']['PROJECTS_ERROR']]})
+          }
+          else{
+            res.status(500).json({errors: [err.message]})
+          }
         }
         else{
           res.status(500).json({errors: [err.message]})
@@ -45,16 +50,26 @@ module.exports = (serviceProjects, servicePublication) => {
     serviceProjects.getProjectById(req.app.locals.t)(langue)(req.params.id)((err,project)=>{
       if(err){
         if(err.name==='NOT_FOUND') {
-          if(req.app.locals.t['ERRORS']['PROJECT_NOT_FOUND']!=undefined){
-            res.status(404).json({errors: [req.app.locals.t['ERRORS']['PROJECT_NOT_FOUND']+req.params.id]})
+          if(req.app.locals.t!=undefined){
+            if(req.app.locals.t['ERRORS']['PROJECT_NOT_FOUND']!=undefined){
+              res.status(404).json({errors: [req.app.locals.t['ERRORS']['PROJECT_NOT_FOUND']+req.params.id]})
+            }
+            else{
+              res.status(404).json({errors: [err.message]})
+            }
           }
           else{
             res.status(404).json({errors: [err.message]})
           }
         }
         else{
-          if(req.app.locals.t['ERRORS']['PROJECT_ERROR']!=undefined){
-            res.status(500).json({errors: [req.app.locals.t['ERRORS']['PROJECT_ERROR']]})
+          if(req.app.locals.t['ERRORS']!=undefined){
+            if(req.app.locals.t['ERRORS']['PROJECT_ERROR']!=undefined){
+              res.status(500).json({errors: [req.app.locals.t['ERRORS']['PROJECT_ERROR']]})
+            }
+            else{
+              res.status(500).json({errors: [err.message]})
+            }
           }
           else{
             res.status(500).json({errors: [err.message]})
