@@ -84,6 +84,11 @@ module.exports = servicePublication => {
     
   })
   router.delete('/:id', (req, res, next) => {
+    servicePublication.getPublicationByIds(req.params.id)((err, publication) => {
+      if(publication===undefined) 
+        res.status(404).send({ errors: [req.app.locals.t['ERRORS']['PUBS_NOT_FOUND_ERROR']] })
+    })
+  })
     servicePublication.removePublication(req.params.id)((err) => {
       if (err) {
         if (req.app.locals.t['ERRORS']['PUB_DELETE_ERROR'] != undefined) {
@@ -93,11 +98,8 @@ module.exports = servicePublication => {
           res.status(500).send({ errors: [err.message] })
         }
       }
-      else{
-        if(servicePublication.getPublicationByIds(id) !==undefined) res.status(200).send();
-        else res.status(404).send({ errors: [req.app.locals.t['ERRORS']['PUBS_NOT_FOUND_ERROR']] })
-      }
+      else 
+      res.status(200).send()
     })
-  })
   return router
 }
