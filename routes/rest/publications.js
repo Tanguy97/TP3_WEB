@@ -61,7 +61,7 @@ module.exports = servicePublication => {
       console.log(title)
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
-          if (req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] ===undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
+          if (req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
           else res.status(400).json({ errors: [err.message] })
         }
         else res.status(400).json({ errors: [err.message] })
@@ -75,7 +75,7 @@ module.exports = servicePublication => {
       console.log(title)
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
-          if (req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] ===undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM']] })
+          if (req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM']] })
           else res.status(400).json({ errors: [err.message] })
         }
         else res.status(400).json({ errors: [err.message] })
@@ -87,7 +87,7 @@ module.exports = servicePublication => {
       console.log(month)
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
-          if (req.app.locals.t['ERRORS']['MONTH_ERROR_FORM'] ===undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
+          if (req.app.locals.t['ERRORS']['MONTH_ERROR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
           else res.status(400).json({ errors: [err.message] })
         }
         else res.status(400).json({ errors: [err.message] })
@@ -99,7 +99,7 @@ module.exports = servicePublication => {
       console.log(year)
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
-          if (req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM'] ===undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM']] })
+          if (req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM']] })
           else res.status(400).json({ errors: [err.message] })
         }
         else res.status(400).json({ errors: [err.message] })
@@ -111,7 +111,7 @@ module.exports = servicePublication => {
       console.log(venue)
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
-          if (req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM'] ===undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM']] })
+          if (req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM']] })
           else res.status(400).json({ errors: [err.message] })
         }
         else res.status(400).json({ errors: [err.message] })
@@ -123,7 +123,7 @@ module.exports = servicePublication => {
       console.log(authors)
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
-          if (req.app.locals.t['ERRORS']['AUTHOR_EMPTY_ERROR'] ===undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['AUTHOR_EMPTY_ERROR']] })
+          if (req.app.locals.t['ERRORS']['AUTHOR_EMPTY_ERROR'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['AUTHOR_EMPTY_ERROR']] })
           else res.status(400).json({ errors: [err.message] })
         }
         else res.status(400).json({ errors: [err.message] })
@@ -139,7 +139,7 @@ module.exports = servicePublication => {
       if (err){
         if(req.app.locals.t!==undefined){
           if( req.app.locals.t['ERRORS'] !==undefined) {
-            if (req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] ===undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
+            if (req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
             else res.status(500).json({ errors: [err.message] })
           }
           else res.status(500).json({ errors: [err.message] })
