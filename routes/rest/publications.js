@@ -85,7 +85,7 @@ module.exports = servicePublication => {
         else res.status(400).json({ errors: ['ERROR3_PUB_AT_LEAST_5_CHAR_FORM!!!!!'] })
       }
 
-      else if (month===undefined||(month < 0 && month > 11)||month.toString().match(/[0-9]+/g)===null  ){
+      else if (month===undefined||(month < 0 || month > 11)||month.toString().match(/[0-9]+/g)===null  ){
 
         if(req.app.locals.t!==undefined){
           if( req.app.locals.t['ERRORS'] !==undefined) {
@@ -136,21 +136,21 @@ module.exports = servicePublication => {
         if (err){
           if(req.app.locals.t!==undefined){
             if( req.app.locals.t['ERRORS'] !==undefined) {
-              if (req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
-              else res.status(400).json({ errors: [err.message] })
+              if (req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] !==undefined)  res.status(500).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
+              else res.status(500).json({ errors: [err.message] })
           }
-          else res.status(400).json({ errors: [err.message] })
+          else res.status(500).json({ errors: [err.message] })
         }
-        else res.status(400).json({ errors: [err.message] })
+        else res.status(500).json({ errors: [err.message] })
       }
-        else res.status(201).send()
+        else res.status(201).json(publications)
         })
       }
     }
     else {
       if(req.app.locals.t!==undefined){
         if( req.app.locals.t['ERRORS'] !==undefined) {
-          if (req.app.locals.t['ERRORS']['EMPTY_PUBLICATION_FORM'] !==undefined)  res.status(500).json({ errors:[ req.app.locals.t['ERRORS']['EMPTY_PUBLICATION_FORM']] })
+          if (req.app.locals.t['ERRORS']['EMPTY_PUBLICATION_FORM'] !==undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['EMPTY_PUBLICATION_FORM']] })
           else res.status(400).json({ errors: ['ERROR1_PUB_CREATE_ERROR!!!!!'] })
         }
         else res.status(400).json({ errors: ['ERROR2_PUB_CREATE_ERROR!!!!!'] })
