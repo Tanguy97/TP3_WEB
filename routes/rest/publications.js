@@ -154,7 +154,7 @@ module.exports = servicePublication => {
 
   router.delete('/:id', (req, res, next) => {
     servicePublication.getPublicationsByIds(req.params.id)((err, publication) => {
-      if(publication===[])
+      if(publication.length===0)
         res.status(404).json({ errors: [req.app.locals.t['ERRORS']['PUBS_NOT_FOUND_ERROR']] })
         else{
           servicePublication.removePublication(req.params.id)((err) => {
