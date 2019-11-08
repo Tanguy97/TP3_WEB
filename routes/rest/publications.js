@@ -49,22 +49,21 @@ module.exports = servicePublication => {
     }
     else return false
   }
-
+  
   router.post('/', (req, res, next) => {
-    if(body!=undefined){
-      let title = req.body.title
-      let month = req.body.month
-      let year = req.body.year
-      let authors = req.body.authors
-      let venue = req.body.venue
+    let title 
+    let month 
+    let year 
+    let authors 
+    let venue 
+    if(req.body!=undefined){
+      title = req.body.title
+      month = req.body.month
+      year = req.body.year
+      authors = req.body.authors
+      venue = req.body.venue
     }
-    else{
-      title = undefined
-      month = undefined
-      year = undefined
-      authors = undefined
-      venue = undefined
-    }
+
     console.log(title,month,year,authors,venue)
     
     if (title == undefined && month === undefined && year == undefined && authors == undefined && venue == undefined ){
