@@ -84,7 +84,7 @@ module.exports = servicePublication => {
     
   })
   router.delete('/:id', (req, res, next) => {
-    servicePublication.removePublication(id)((err) => {
+    servicePublication.removePublication(req.params.id)((err) => {
       if (err) {
         if (req.app.locals.t['ERRORS']['PUB_DELETE_ERROR'] != undefined) {
           res.status(500).send({ errors: [req.app.locals.t['ERRORS']['PUBS_ERROR']] })
