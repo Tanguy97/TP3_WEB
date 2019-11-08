@@ -25,7 +25,7 @@ module.exports = servicePublication => {
       if (err) {
         if(req.app.locals.t!==undefined){
           if( req.app.locals.t['ERRORS'] !==undefined) {
-            if (req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM'] !==undefined)  res.status(500).json({ errors: [req.app.locals.t['ERRORS']['PUBS_ERROR']] })
+            if (req.app.locals.t['ERRORS']['PUBS_ERROR'] !==undefined)  res.status(500).json({ errors: [req.app.locals.t['ERRORS']['PUBS_ERROR']] })
             else res.status(500).json({ errors: [err.message] })
           }
           else res.status(500).json({ errors: [err.message] })
