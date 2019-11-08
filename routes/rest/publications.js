@@ -23,13 +23,16 @@ module.exports = servicePublication => {
 
     servicePublication.getPublications({ pageNumber: page, limit: limit, sorting: sorting_tab })((err, publications) => {
       if (err) {
-        if (req.app.locals.t['ERRORS']['PUBS_ERROR'] != undefined) {
-          res.status(500).json({ errors: [req.app.locals.t['ERRORS']['PUBS_ERROR']] })
+        if(req.app.locals.t!==undefined){
+          if( req.app.locals.t['ERRORS'] !==undefined) {
+            if (req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM'] ===undefined)  res.status(500).json({ errors: [req.app.locals.t['ERRORS']['PUBS_ERROR']] })
+            else res.status(500).json({ errors: [err.message] })
+          }
+          else res.status(500).json({ errors: [err.message] })
         }
-        else {
-          res.status(500).json({ errors: [err.message] })
-        }
+        else res.status(500).json({ errors: [err.message] })
       }
+      
       else {
         servicePublication.getNumberOfPublications((err,numberPublication)=>{
           if(numberPublication===0) res.json({count:0, publications:[]})
@@ -56,56 +59,76 @@ module.exports = servicePublication => {
 
     if (title == undefined || month === undefined || year == undefined || authors == undefined || venue == undefined ){
       console.log(title)
-      if(req.app.locals.t===undefined){
-        if( req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] ===undefined) res.status(400).json({ errors: [err.message] })
+      if(req.app.locals.t!==undefined){
+        if( req.app.locals.t['ERRORS'] !==undefined) {
+          if (req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] ===undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
+          else res.status(400).json({ errors: [err.message] })
+        }
         else res.status(400).json({ errors: [err.message] })
       }
-      else res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
+      else res.status(400).json({ errors: [err.message] })
+      
     }
     //error code 400 bad request
     
     else if (title.length < 5){
       console.log(title)
-      if(req.app.locals.t===undefined){
-        if( req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] ===undefined) res.status(400).json({ errors: [err.message] })
+      if(req.app.locals.t!==undefined){
+        if( req.app.locals.t['ERRORS'] !==undefined) {
+          if (req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] ===undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM']] })
+          else res.status(400).json({ errors: [err.message] })
+        }
         else res.status(400).json({ errors: [err.message] })
       }
-      else res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_AT_LEAST_5_CHAR_FORM'] ]})
-    }      
-    else if (month > 0 && month > 11){
+      else res.status(400).json({ errors: [err.message] })
+    }
+     
+    else if (month < 0 && month > 11){
       console.log(month)
-      if(req.app.locals.t===undefined){
-        if( req.app.locals.t['ERRORS']['MONTH_ERROR_FORM'] ===undefined) res.status(400).json({ errors: [err.message] })
+      if(req.app.locals.t!==undefined){
+        if( req.app.locals.t['ERRORS'] !==undefined) {
+          if (req.app.locals.t['ERRORS']['MONTH_ERROR_FORM'] ===undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
+          else res.status(400).json({ errors: [err.message] })
+        }
         else res.status(400).json({ errors: [err.message] })
       }
-      else res.status(400).json({ errors: [req.app.locals.t['ERRORS']['MONTH_ERROR_FORM']] })
+      else res.status(400).json({ errors: [err.message] })
     }
       
-    else if( year.toString().match(/[0-9]+/g)){
+    else if( year.toString().match(/[0-9]+/g)===null){
       console.log(year)
-      if(req.app.locals.t===undefined){
-        if( req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM'] ===undefined) res.status(400).json({ errors: [err.message] })
+      if(req.app.locals.t!==undefined){
+        if( req.app.locals.t['ERRORS'] !==undefined) {
+          if (req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM'] ===undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM']] })
+          else res.status(400).json({ errors: [err.message] })
+        }
         else res.status(400).json({ errors: [err.message] })
       }
-      else res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['YEAR_NOT_INT_FORM']] })
+      else res.status(400).json({ errors: [err.message] })
     }
       
     else if (venue.length < 5){
       console.log(venue)
-      if(req.app.locals.t===undefined){
-        if( req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM'] ===undefined) res.status(400).json({ errors: [err.message] })
+      if(req.app.locals.t!==undefined){
+        if( req.app.locals.t['ERRORS'] !==undefined) {
+          if (req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM'] ===undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM']] })
+          else res.status(400).json({ errors: [err.message] })
+        }
         else res.status(400).json({ errors: [err.message] })
       }
-      else res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['VENUE_AT_LEAST_5_CHAR_FORM']] })
+      else res.status(400).json({ errors: [err.message] })
     }
 
     else if (est_vide(authors)){
       console.log(authors)
-      if(req.app.locals.t===undefined){
-        if( req.app.locals.t['ERRORS']['AUTHOR_EMPTY_ERROR'] ===undefined) res.status(400).json({ errors: [err.message] })
+      if(req.app.locals.t!==undefined){
+        if( req.app.locals.t['ERRORS'] !==undefined) {
+          if (req.app.locals.t['ERRORS']['AUTHOR_EMPTY_ERROR'] ===undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['AUTHOR_EMPTY_ERROR']] })
+          else res.status(400).json({ errors: [err.message] })
+        }
         else res.status(400).json({ errors: [err.message] })
       }
-      else res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['AUTHOR_EMPTY_ERROR']] })
+      else res.status(400).json({ errors: [err.message] })
     }
 
     else {
@@ -114,11 +137,14 @@ module.exports = servicePublication => {
       servicePublication.createPublication(publication)((err, publications) => {
 
       if (err){
-        if(req.app.locals.t===undefined){
-          if( req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] ===undefined) res.status(400).json({ errors: [err.message] })
-          else res.status(400).json({ errors: [err.message] })
+        if(req.app.locals.t!==undefined){
+          if( req.app.locals.t['ERRORS'] !==undefined) {
+            if (req.app.locals.t['ERRORS']['PUB_CREATE_ERROR'] ===undefined)  res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
+            else res.status(500).json({ errors: [err.message] })
+          }
+          else res.status(500).json({ errors: [err.message] })
         }
-        else res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['PUB_CREATE_ERROR']] })
+        else res.status(500).json({ errors: [err.message] })
       }
       else res.status(201).send()
       })
@@ -128,7 +154,7 @@ module.exports = servicePublication => {
 
   router.delete('/:id', (req, res, next) => {
     servicePublication.getPublicationsByIds(req.params.id)((err, publication) => {
-      if(publication===undefined)
+      if(publication===[])
         res.status(404).json({ errors: [req.app.locals.t['ERRORS']['PUBS_NOT_FOUND_ERROR']] })
         else{
           servicePublication.removePublication(req.params.id)((err) => {
