@@ -71,11 +71,12 @@ const initDb = async function(){
     //Suppression des key de publication
     await db.collection('publications').updateMany({},{$unset:{key:""}})
 
-    console.log("Database ready")
-    return db
+    console.log('Database ready')
   } catch (err) {
     console.log(err.stack)
   }
+  client.close()
+  console.log('Disconnected')
 }
 
 module.exports = {

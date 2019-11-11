@@ -85,9 +85,24 @@ app.use((err, req, res, next) => {
 
 // Amorçage de l'application web avec la base de données
 // À COMPLÉTER
+app.use(async(err,req,res,next)=>{
+  try{
+    await client.connect()
+  }catch(err){
+    next(err)
+  }
+  const client = new MongoClient(config['dbUrl'], {useNewUrlParser: true})
+  console.log('Connected to database')
+  res.app.db = client.db(config['dbName'])
+  next()
+})
 
 const start = async function(){
-  app.db = await initDb()
+  try{
+    await initDb()
+  }catch(err){
+    console.log(err)
+  }
   app.listen(port, function () {
     console.log('Listening on port ' + port)
   })
