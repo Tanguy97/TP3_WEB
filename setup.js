@@ -5,7 +5,7 @@ const config = require('./config.json')
 const moment = require('moment')
 const client = new MongoClient(config['dbUrl'], {useNewUrlParser: true})
 
-async function main(){
+const initDb = async function(){
   try {
     //Connection à la base de donnée
     await client.connect()
@@ -71,12 +71,13 @@ async function main(){
     //Suppression des key de publication
     await db.collection('publications').updateMany({},{$unset:{key:""}})
 
+    console.log("Database ready")
+    return db
   } catch (err) {
     console.log(err.stack)
   }
-  //Fermeture de la connexion
-  client.close();
-  console.log('Disconnected')
 }
 
-main()
+module.exports = {
+  initDb: initDb
+}
