@@ -7,8 +7,7 @@ const request = require('request')
 // À COMPLÉTER
 const renderPublication =  (req, res, next) => {
   let error = []
-  console.log(req.errors)
-  if (req.errors!==undefined ) error=req.errors
+  if (req.errors!==undefined ) error=req.errors['errors']
   let publication
   let page = req.query.page
   let limit = req.query.limit
@@ -36,15 +35,20 @@ router.get('/',renderPublication)
 
 router.post('/',(req, res, next) => {
   const url = 'http://localhost:3000/api/publications'
-  request.post(url,req.body, (err, resultat, body) => {
+  const option = {
+    url:url,
+    form:req.body
+  }
+  request.post(option, (err, resultat, body) => {
     if (err) {
       next(err)
     }
-    error = JSON.parse(body)
-    console.log(error) 
-    req.errors = error
+    if(resultat.statusCode===400){
+      error = JSON.parse(body)
+      req.errors = error
+    }
+    next()
   })
-  next()
 },renderPublication)
 
 module.exports = router
