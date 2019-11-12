@@ -6,8 +6,8 @@ module.exports = servicePublication => {
 
   // À COMPLÉTER
   router.get('/', (req, res, next) => {
-    let page = req.query.page
-    let limit = req.query.limit
+    let page = parseInt(req.query.page)
+    let limit = parseInt(req.query.limit)
     let order_by = req.query.order_by
     let sort_by = req.query.sort_by
     if (page === undefined) page = 1
@@ -16,13 +16,10 @@ module.exports = servicePublication => {
     if (sort_by === undefined) sort_by = "date"
     if (sort_by === "date") {
       var sorting_tab = [["year", order_by], ["month", order_by]]
-      console.log("hello")
     }
     if (sort_by === "title") {
       var sorting_tab = [["title", order_by]]
     }
-    console.log(sort_by)
-    console.log(sorting_tab)
     servicePublication.getPublications({ pageNumber: page, limit: limit, sorting: sorting_tab })((err, publications) => {
       if (err) {
         if(req.app.locals.t!==undefined && req.app.locals.t['ERRORS'] !==undefined && req.app.locals.t['ERRORS']['PUBS_ERROR'] !==undefined){
