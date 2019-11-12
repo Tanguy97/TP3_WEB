@@ -41,10 +41,10 @@ router.post('/',(req, res, next) => {
       next(err)
     }
     error = JSON.parse(body)
-    console.log(error) 
+    console.log(error)
     req.errors = error
+    next()
   })
-  next()
 },renderPublication)
 
 module.exports = router
