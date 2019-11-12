@@ -14,13 +14,15 @@ module.exports = servicePublication => {
     if (limit === undefined) limit = 10
     if (order_by === undefined) order_by = "desc"
     if (sort_by === undefined) sort_by = "date"
-    else if (sort_by === "date") {
-      var sorting_tab = [["year", sort_by], ["month", sort_by]]
+    if (sort_by === "date") {
+      var sorting_tab = [["year", order_by], ["month", order_by]]
+      console.log("hello")
     }
-    else if (sort_by === "title") {
-      var sorting_tab = [["title", sort_by]]
+    if (sort_by === "title") {
+      var sorting_tab = [["title", order_by]]
     }
-
+    console.log(sort_by)
+    console.log(sorting_tab)
     servicePublication.getPublications({ pageNumber: page, limit: limit, sorting: sorting_tab })((err, publications) => {
       if (err) {
         if(req.app.locals.t!==undefined && req.app.locals.t['ERRORS'] !==undefined && req.app.locals.t['ERRORS']['PUBS_ERROR'] !==undefined){
@@ -101,7 +103,7 @@ module.exports = servicePublication => {
         }
         else error.push('AUTHOR_EMPTY_FORM')
       }
-      
+
       if (error.length!=0){
         res.status(400).json({ errors:error })
       }
@@ -117,9 +119,9 @@ module.exports = servicePublication => {
         else res.status(201).json(publications)
         })
       }
-      
+
     }
-    else { 
+    else {
       if(req.app.locals.t!==undefined && req.app.locals.t['ERRORS'] !==undefined && req.app.locals.t['ERRORS']['EMPTY_PUBLICATION_FORM'] !==undefined){
         res.status(400).json({ errors:[ req.app.locals.t['ERRORS']['EMPTY_PUBLICATION_FORM']] })
       }
