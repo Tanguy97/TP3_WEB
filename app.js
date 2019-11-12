@@ -86,12 +86,12 @@ app.use((err, req, res, next) => {
 // Amorçage de l'application web avec la base de données
 // À COMPLÉTER
 app.use(async(err,req,res,next)=>{
+  const client = new MongoClient(config['dbUrl'], {useNewUrlParser: true})
   try{
     await client.connect()
   }catch(err){
     next(err)
   }
-  const client = new MongoClient(config['dbUrl'], {useNewUrlParser: true})
   console.log('Connected to database')
   res.app.db = client.db(config['dbName'])
   next()
