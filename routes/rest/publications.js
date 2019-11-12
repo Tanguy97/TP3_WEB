@@ -15,10 +15,10 @@ module.exports = servicePublication => {
     if (order_by === undefined) order_by = "desc"
     if (sort_by === undefined) sort_by = "date"
     else if (sort_by === "date") {
-      var sorting_tab = [[publications.year, sort_by], [publications.month, sort_by]]
+      var sorting_tab = [["year", sort_by], ["month", sort_by]]
     }
     else if (sort_by === "title") {
-      var sorting_tab = [[publications.title, sort_by]]
+      var sorting_tab = [["title", sort_by]]
     }
 
     servicePublication.getPublications({ pageNumber: page, limit: limit, sorting: sorting_tab })((err, publications) => {
