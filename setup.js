@@ -79,6 +79,4 @@ const initDb = async function(){
   console.log('Disconnected')
 }
 
-module.exports = {
-  initDb: initDb
-}
+initDb()
