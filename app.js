@@ -14,7 +14,6 @@ const formatter = require('./helpers/formatter')
 
 const config = require('./config.json')
 const MongoClient = require('mongodb').MongoClient
-const initDb = require('./setup.js').initDb
 
 // Possibilité de spécifier le numéro de port par ligne de commande.
 const port = process.env.PORT || 3000
@@ -85,29 +84,22 @@ app.use((err, req, res, next) => {
 
 // Amorçage de l'application web avec la base de données
 // À COMPLÉTER
-app.use(async(err,req,res,next)=>{
-  const client = new MongoClient(config['dbUrl'], {useNewUrlParser: true})
+const client = new MongoClient(config['dbUrl'], {useNewUrlParser: true})
+const connect= async function (){
   try{
     await client.connect()
   }catch(err){
-    next(err)
-  }
-  console.log('Connected to database')
-  res.app.db = client.db(config['dbName'])
-  next()
-})
-
-const start = async function(){
-  try{
-    await initDb()
-  }catch(err){
     console.log(err)
   }
-  app.listen(port, function () {
-    console.log('Listening on port ' + port)
-  })
+  app.locals.db = client.db(config['dbName'])
+  console.log("Conneted to database")
 }
+connect()
 
-start()
+app.listen(port, function () {
+  console.log('Listening on port ' + port)
+})
+
+
 
 module.exports = app
