@@ -5,8 +5,10 @@ const request = require('request')
 
 
 // À COMPLÉTER
-router.get('/', (req, res, next) => {
+const renderPublication =  (req, res, next) => {
   let error = []
+  console.log(req.errors)
+  if (req.errors!==undefined ) error=req.errors
   let publication
   let page = req.query.page
   let limit = req.query.limit
@@ -24,28 +26,25 @@ router.get('/', (req, res, next) => {
     }
     publication = JSON.parse(body)["publication"]
     const count = JSON.parse(body)["count"]
-    if (sort_by === undefined) sort_by = "date"
-    else if (sort_by === "date") {
-      var sorting_tab = [[publication.year, sort_by], [publication.month, sort_by]]
-    }
-    else if (sort_by === "title") {
-      var sorting_tab = [[publication.title, sort_by]]
-    }
-    const pageOpt = { "pageNumber": page, "limit": limit, "sorting": sorting_tab }
+    const pageOpt = { "pageNumber": page, "limit": limit,'sortBy':sort_by,'orderBy':order_by }
     const numPage = Math.ceil(count/ limit)
     const month = moment.months()
     res.render('publication.pug', { "publications": publication, "pubFormErrors": error, "pagingOptions": pageOpt, "numberOfPages": numPage, "monthNames": month })
   })
-})
+}
+router.get('/',renderPublication)
 
-router.post('/', (req, res, next) => {
+router.post('/',(req, res, next) => {
   const url = 'http://localhost:3000/api/publications'
-  request.post(url, (err, resultat, body) => {
+  request.post(url,req.body, (err, resultat, body) => {
     if (err) {
-      error = JSON.parse(body)
       next(err)
     }
+    error = JSON.parse(body)
+    console.log(error) 
+    req.errors = error
   })
-})
+  next()
+},renderPublication)
 
 module.exports = router
