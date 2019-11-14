@@ -10,8 +10,8 @@ module.exports = servicePublication => {
     let limit = parseInt(req.query.limit)
     let order_by = req.query.order_by
     let sort_by = req.query.sort_by
-    if (page === undefined) page = 1
-    if (limit === undefined) limit = 10
+    if (!page) page = 1
+    if (!limit) limit = 10
     if (order_by === undefined) order_by = "desc"
     if (sort_by === undefined) sort_by = "date"
     if (sort_by === "date") {
@@ -20,6 +20,7 @@ module.exports = servicePublication => {
     if (sort_by === "title") {
       var sorting_tab = [["title", order_by]]
     }
+    console.log(page,limit)
     servicePublication.getPublications({ pageNumber: page, limit: limit, sorting: sorting_tab })((err, publications) => {
       if (err) {
         if(req.app.locals.t!==undefined && req.app.locals.t['ERRORS'] !==undefined && req.app.locals.t['ERRORS']['PUBS_ERROR'] !==undefined){

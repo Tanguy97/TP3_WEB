@@ -13,8 +13,8 @@ const renderPublication =  (req, res, next) => {
   let limit = req.query.limit
   let order_by = req.query.order_by
   let sort_by = req.query.sort_by
-  if (page === undefined) page = 1
-  if (limit === undefined) limit = 10
+  if (!page) page = 1
+  if (!limit) limit = 10
   if (order_by === undefined) order_by = "desc"
   if (sort_by === undefined) sort_by = "date"
   const url = 'http://localhost:3000/api/publications'+'?limit='+limit+'&page='+page+'&sort_by='+sort_by+'&order_by='+order_by
