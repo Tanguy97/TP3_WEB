@@ -22,7 +22,7 @@ router.get('/:id',(req,res,next)=>{
       next(err)
     }
     const project= JSON.parse(body)
-    res.render('project.pug',project)
+    res.render('project.pug',{"project": project.project,"publications": project.publications})
   })
 })
 module.exports = router

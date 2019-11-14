@@ -10,7 +10,7 @@ module.exports = (serviceProjects, servicePublication) => {
     if(langue===undefined){
       langue = 'fr'
     }
-    serviceProjects.getProjects(langue)((err,projects)=>{
+    serviceProjects.getProjects(langue)(async (err,projects)=>{
       if(err){
         if(req.app.locals.t!=undefined && req.app.locals.t['ERRORS']!=undefined && req.app.locals.t['ERRORS']['PROJECTS_ERROR']!=undefined){
           res.status(500).json({errors: [req.app.locals.t['ERRORS']['PROJECTS_ERROR']]})
@@ -24,14 +24,20 @@ module.exports = (serviceProjects, servicePublication) => {
           res.json([])
         }
         else{
-          projects = projects.map(currentProject =>{
-            const formatProject = {project: currentProject,publications: []}
-            servicePublication.getPublicationsByIds(currentProject["publications"])((err,publications)=>{
-              formatProject["publications"]=publications
-            })
-            return formatProject
-          })
-          res.json(projects)
+          try{
+            projects = await Promise.all(projects.map(async currentProject =>{
+              try{
+                const formatProject = {project: currentProject,publications: []}
+                formatProject["publications"] = await servicePublication.getPublicationsByIds(currentProject["publications"])
+                return formatProject
+              }catch(err){
+                console.log(err)
+              }
+            }))
+            res.json(projects)
+          }catch(err){
+            console.log(err)
+          }
         }
       }
     })
@@ -65,8 +71,8 @@ module.exports = (serviceProjects, servicePublication) => {
         const formatProject = {project: project,publications:[]}
         servicePublication.getPublicationsByIds(project["publications"])((err,publications)=>{
           formatProject["publications"]=publications
+          res.json(formatProject)
         })
-        res.json(formatProject)
       }
     })
   })

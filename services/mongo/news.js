@@ -21,7 +21,8 @@ const getNews = db => language => callback => {
   db.collection('news').find().toArray((err,res)=>{
     if (err) callback(err,null)
     else{
-      const news = res.map(s => {
+      const news = res
+      .map(s => {
         const translatedText = getTranslation(language, s.text)
         const newCreatedAtDate = moment(s.createdAt, 'YYYY-MM-DD HH:mm:ss').toDate()
         return {
@@ -31,6 +32,7 @@ const getNews = db => language => callback => {
           createdAt: newCreatedAtDate
         }
       })
+      .filter(s => s.text.length>0)
       callback(null, news)
     }
   })

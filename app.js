@@ -93,12 +93,13 @@ const connect= async function (){
     console.log(err)
   }
   console.log("Conneted to database")
+  app.listen(port, function () {
+    console.log('Listening on port ' + port)
+  })
 }
 connect()
 
-app.listen(port, function () {
-  console.log('Listening on port ' + port)
-})
+
 
 
 

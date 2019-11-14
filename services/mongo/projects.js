@@ -55,7 +55,6 @@ const getProjects = db => language => callback => {
 const getProjectById = db => translationObj => language => id => callback => {
   // À COMPLÉTER
   db.collection('projects').findOne({_id: id},(err,res)=>{
-    console.log(err,res)
     if(err) callback(err,null)
     else if (res==null) callback({name:'NOT_FOUND'},null)
     else{

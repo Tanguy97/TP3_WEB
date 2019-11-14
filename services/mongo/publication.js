@@ -125,9 +125,16 @@ const createPublication = db => publication => callback => {
  */
 const removePublication = db => id => callback => {
   // À COMPLÉTER
-  db.collection('publications').remove({ _id: id }, (err) => {
-    if (err) callback(err)
-    else callback(null)
+  const objectId = mongodb.ObjectId(id.toString())
+  db.collection('publications').findOne({_id: objectId },(err,res)=>{
+    if(err) callback(err,null)
+    else if (res==null) callback({name: 'NOT_FOUND'},null)
+    else{
+      db.collection('publications').deleteOne({_id: objectId }, (err,res) => {
+        if (err) callback(err,null)
+        else callback(null,res)
+      })
+    }
   })
 }
 
@@ -146,15 +153,25 @@ const removePublication = db => id => callback => {
  *  @param {Array} pubIds - Publication ids
  *  @param {projectPublicationsCallback} callback - Fonction de rappel pour obtenir le résultat
  */
-const getPublicationsByIds = db => pubIds => callback => {
+const getPublicationsByIds = db => pubIds => async callback => {
   // À COMPLÉTER
-  getPublications(db)(undefined)((err, publications) => {
-    if (err) {
-      callback(err, null)
-    } else {
-      callback(null, publications.filter(publication => pubIds.includes(publication._id)).sort((p1, p2) => p1.year < p2.year ? 1 : -1))
-    }
-  })
+  try{
+    const publications = await Promise.all(pubIds.map(async id =>{
+      const objectId = mongodb.ObjectId(id.toString())
+      try{
+        const publication = await db.collection('publications').findOne({_id: objectId})
+        return {
+          ...publication,
+          month: (publication.month === undefined) ? undefined : moment().month(publication.month - 1).format('MMMM')
+        }
+      } catch(err){
+        console.log(err)
+      }
+  }))
+    callback(null,publications)
+  }catch(err){
+    callback(err,null)
+  }
 }
 
 module.exports = db => {
