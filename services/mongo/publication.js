@@ -17,10 +17,35 @@ const mongodb = require('mongodb')
  */
 const getNumberOfPublications = db => callback => {
   // À COMPLÉTER
-  db.collection('publications').find((err,publication)=>{
+  db.collection('publications').find((err, publication) => {
     if (err) callback(err, null)
     else callback(null, publication.length)
   })
+}
+
+/**
+ *  Fonction de comparaison de publications.
+ *
+ *  @param pagingOpts - Options pour la pagination qui contient entre autre
+ *    des options pour le trie
+ *  @param p1 - Première publication à comparer
+ *  @param p2 - Deuxième publication à comparer
+ *  @returns Valeurs de comparaison -1, 1 ou 0
+ */
+const comparePublications = pagingOpts => (p1, p2) => {
+  if(pagingOpts!=undefined){
+    if(pagingOpts.sorting!=undefined){
+      return pagingOpts.sorting.reduce((acc, sort) => {
+        if (acc === 0) {
+          const field = sort[0]
+          const order = sort[1]
+          const compare = p1[field] < p2[field] ? -1 : p1[field] > p2[field] ? 1 : 0
+          return order === 'asc' ? compare : order === 'desc' ? -compare : compare
+        }
+        return acc
+      }, 0) 
+    }
+  }
 }
 
 /**
@@ -46,24 +71,23 @@ const getNumberOfPublications = db => callback => {
  */
 const getPublications = db => pagingOpts => callback => {
   // À COMPLÉTER
-  db.collection('publications').find((err, publication) => {
+  db.collection('publications').find().toArray((err, res) => {
     if (err) {
       callback(err, null)
     } else {
-      publication.sort(comparePublications(pagingOpts))
-        .map(publication => {
-          return {
-            ...publication,
-            month: (publication.month === undefined) ? undefined : moment().month(publication.month - 1).format('MMMM')
-          }
-        })
+      const pub = res.sort(comparePublications(pagingOpts)).map(publication => {
+        return {
+          ...publication,
+          month: (publication.month === undefined) ? undefined : moment().month(publication.month - 1).format('MMMM')
+        }
+      })
 
       if (pagingOpts === undefined || pagingOpts.pageNumber === undefined || pagingOpts.limit === undefined) {
-        callback(null, publications)
+        callback(null, pub)
       } else {
         const startIndex = (pagingOpts.pageNumber - 1) * pagingOpts.limit
         const endIndex = startIndex + pagingOpts.limit
-        const topNPublications = publications.slice(startIndex, endIndex)
+        const topNPublications = pub.slice(startIndex, endIndex)
         callback(null, topNPublications)
       }
     }
@@ -78,7 +102,7 @@ const getPublications = db => pagingOpts => callback => {
  * @param {Object} result - Publication créée
  */
 
-/**
+/** 
  *  Création d'une publication dans la BD.
  *
  *  @param db - Base de données Mongo
@@ -87,9 +111,9 @@ const getPublications = db => pagingOpts => callback => {
  */
 const createPublication = db => publication => callback => {
   // À COMPLÉTER
-  db.collection('publications').insert(publication,(err,publication)=>{
-    if(err) callback(err,null)
-    else callback(null,publication)
+  db.collection('publications').insert(publication, (err, publication) => {
+    if (err) callback(err, null)
+    else callback(null, publication)
   })
 }
 
@@ -102,8 +126,8 @@ const createPublication = db => publication => callback => {
  */
 const removePublication = db => id => callback => {
   // À COMPLÉTER
-  db.collection('publications').remove({_id:id},(err)=>{
-    if(err) callback(err)
+  db.collection('publications').remove({ _id: id }, (err) => {
+    if (err) callback(err)
     else callback(null)
   })
 }
@@ -125,7 +149,7 @@ const removePublication = db => id => callback => {
  */
 const getPublicationsByIds = db => pubIds => callback => {
   // À COMPLÉTER
-  getPublications(fs)(undefined)((err, publications) => {
+  getPublications(db)(undefined)((err, publications) => {
     if (err) {
       callback(err, null)
     } else {
