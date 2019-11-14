@@ -43,7 +43,7 @@ const comparePublications = pagingOpts => (p1, p2) => {
           return order === 'asc' ? compare : order === 'desc' ? -compare : compare
         }
         return acc
-      }, 0) 
+      }, 0)
     }
   }
 }
@@ -81,7 +81,6 @@ const getPublications = db => pagingOpts => callback => {
           month: (publication.month === undefined) ? undefined : moment().month(publication.month - 1).format('MMMM')
         }
       })
-
       if (pagingOpts === undefined || pagingOpts.pageNumber === undefined || pagingOpts.limit === undefined) {
         callback(null, pub)
       } else {
@@ -102,7 +101,7 @@ const getPublications = db => pagingOpts => callback => {
  * @param {Object} result - Publication créée
  */
 
-/** 
+/**
  *  Création d'une publication dans la BD.
  *
  *  @param db - Base de données Mongo
