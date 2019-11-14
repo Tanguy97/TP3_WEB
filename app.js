@@ -88,10 +88,10 @@ const client = new MongoClient(config['dbUrl'], {useNewUrlParser: true})
 const connect= async function (){
   try{
     await client.connect()
+    app.db = client.db(config['dbName'])
   }catch(err){
     console.log(err)
   }
-  app.locals.db = client.db(config['dbName'])
   console.log("Conneted to database")
 }
 connect()

@@ -20,10 +20,16 @@ const { getTranslation } = require('../utils')
  */
 const getSeminars = db => query => language => callback => {
   // À COMPLÉTER
-  const sort=1
-  if (field.sort.field==='DESC') sort=-1
-  db.collection('seminars').find({},((err,sem)=>{
-    if(err) callback(err,null)
+  const sort={}
+  if(query.sort!=undefined){
+    sort[query.sort.field]=1
+    if (query.sort.order==='DESC') sort[query.sort.field]=-1
+  }
+  else sort['createdAt']=1
+  db.collection('seminars').find({}).sort(sort).toArray(((err,sem)=>{
+    if(err) {
+      callback(err,null)
+    }
     else {
       const seminars = sem.map(s=>{
         const translatedTitle = getTranslation(language, s.title)
@@ -41,7 +47,7 @@ const getSeminars = db => query => language => callback => {
       })
       callback(null,seminars)
     }
-  })).sort(query.sort.field)
+  }))
 }
 
 module.exports = db => {
