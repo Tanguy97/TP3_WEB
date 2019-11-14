@@ -17,8 +17,22 @@ const ObjectId = require('mongodb').ObjectId
  *  @param {projectsCallback} callback - Fonction de rappel pour obtenir le résultat
  */
 const getProjects = db => language => callback => {
-  // À COMPLÉTER
-  callback(null, [])
+  db.collection('projects').find().toArray((err,proj)=>{
+    if(err) callback(err,null)
+    else{
+      const projects = proj.map(project => {
+        const translatedTitle = getTranslation(language, project.title)
+        const translatedDescription = getTranslation(language, project.description)
+        return {
+          ...project,
+          title: translatedTitle,
+          description: translatedDescription,
+          publications: (project.publications === undefined) ? [] : project.publications
+        }
+      })
+    callback(null, projects)
+    }
+  })
 }
 
 /**
@@ -40,7 +54,22 @@ const getProjects = db => language => callback => {
  */
 const getProjectById = db => translationObj => language => id => callback => {
   // À COMPLÉTER
-  callback()
+  db.collection('projects').findOne({_id: id},(err,res)=>{
+    console.log(err,res)
+    if(err) callback(err,null)
+    else if (res==null) callback({name:'NOT_FOUND'},null)
+    else{
+      const translatedTitle = getTranslation(language, res.title)
+      const translatedDescription = getTranslation(language, res.description)
+      const project = {
+        ...res,
+        title: translatedTitle,
+        description: translatedDescription,
+        publications: (res.publications === undefined) ? [] : res.publications
+      }
+      callback(null,project)
+    }
+  })
 }
 
 module.exports = db => {
