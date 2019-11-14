@@ -8,17 +8,19 @@
 
 const getTeamMembers = db => callback => {
   // À COMPLÉTER
-  db.collection('team').find((err,team)=>{
-    team.map(s => {
-      sort((m1, m2) => {
+  db.collection('members').find().toArray((err,members)=>{
+    if(err) callback(err,null)
+    else{
+      const team = members.sort((m1, m2) => {
         if (m1.lastname === m2.lastname) {
           return (m1.firstname < m2.firstname) ? -1 : (m1.firstname > m2.firstname) ? 1 : 0
         } else {
           return (m1.lastname < m2.lastname) ? -1 : 1
         }
       })
-  })
-  callback(null, team)}).toArray()
+      callback(null, team)
+   }
+ })
 }
 
 module.exports = db => {
