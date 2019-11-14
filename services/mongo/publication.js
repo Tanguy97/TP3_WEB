@@ -17,7 +17,10 @@ const mongodb = require('mongodb')
  */
 const getNumberOfPublications = db => callback => {
   // À COMPLÉTER
-  callback(null, 0)
+  db.collection('publications').find((err,publication)=>{
+    if (err) callback(err, null)
+    else callback(null, publication.length)
+  })
 }
 
 /**
@@ -43,7 +46,28 @@ const getNumberOfPublications = db => callback => {
  */
 const getPublications = db => pagingOpts => callback => {
   // À COMPLÉTER
-  callback(null, [])
+  db.collection('publications').find((err, publication) => {
+    if (err) {
+      callback(err, null)
+    } else {
+      publication.sort(comparePublications(pagingOpts))
+        .map(publication => {
+          return {
+            ...publication,
+            month: (publication.month === undefined) ? undefined : moment().month(publication.month - 1).format('MMMM')
+          }
+        })
+
+      if (pagingOpts === undefined || pagingOpts.pageNumber === undefined || pagingOpts.limit === undefined) {
+        callback(null, publications)
+      } else {
+        const startIndex = (pagingOpts.pageNumber - 1) * pagingOpts.limit
+        const endIndex = startIndex + pagingOpts.limit
+        const topNPublications = publications.slice(startIndex, endIndex)
+        callback(null, topNPublications)
+      }
+    }
+  })
 }
 
 /**
@@ -63,7 +87,10 @@ const getPublications = db => pagingOpts => callback => {
  */
 const createPublication = db => publication => callback => {
   // À COMPLÉTER
-  callback()
+  db.collection('publications').insert(publication,(err,publication)=>{
+    if(err) callback(err,null)
+    else callback(null,publication)
+  })
 }
 
 /**
@@ -75,7 +102,10 @@ const createPublication = db => publication => callback => {
  */
 const removePublication = db => id => callback => {
   // À COMPLÉTER
-  callback()
+  db.collection('publications').remove({_id:id},(err)=>{
+    if(err) callback(err)
+    else callback(null)
+  })
 }
 
 /**
@@ -95,7 +125,13 @@ const removePublication = db => id => callback => {
  */
 const getPublicationsByIds = db => pubIds => callback => {
   // À COMPLÉTER
-  callback(null, [])
+  getPublications(fs)(undefined)((err, publications) => {
+    if (err) {
+      callback(err, null)
+    } else {
+      callback(null, publications.filter(publication => pubIds.includes(publication._id)).sort((p1, p2) => p1.year < p2.year ? 1 : -1))
+    }
+  })
 }
 
 module.exports = db => {

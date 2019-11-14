@@ -18,11 +18,19 @@ const { getTranslation } = require('../utils')
  */
 const getNews = db => language => callback => {
   // À COMPLÉTER
+<<<<<<< HEAD
   db.collection('news').find((err,news)=>{
     if (err)  callback(err, null)
     else{
       news.map(s => {
         const translatedText = db.collection('news').find({},{"text.language":1})
+=======
+  db.collection('news').find().toArray((err,res)=>{
+    if (err) callback(err,null)
+    else{
+      const news = res.map(s => {
+        const translatedText = getTranslation(language, s.text)
+>>>>>>> e02a25633077709777c9d8dff0b541e409d8b978
         const newCreatedAtDate = moment(s.createdAt, 'YYYY-MM-DD HH:mm:ss').toDate()
         return {
           ...s,
@@ -31,9 +39,15 @@ const getNews = db => language => callback => {
           createdAt: newCreatedAtDate
         }
       })
+<<<<<<< HEAD
     callback(null, news)
     }
   }).toArray()
+=======
+      callback(null, news)
+    }
+  })
+>>>>>>> e02a25633077709777c9d8dff0b541e409d8b978
 }
 
 module.exports = db => {
