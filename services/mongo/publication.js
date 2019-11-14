@@ -17,7 +17,7 @@ const mongodb = require('mongodb')
  */
 const getNumberOfPublications = db => callback => {
   // À COMPLÉTER
-  db.collection('publications').find((err, publication) => {
+  db.collection('publications').find().toArray((err, publication) => {
     if (err) callback(err, null)
     else callback(null, publication.length)
   })

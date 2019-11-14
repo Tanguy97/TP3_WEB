@@ -20,7 +20,6 @@ module.exports = servicePublication => {
     if (sort_by === "title") {
       var sorting_tab = [["title", order_by]]
     }
-    console.log(page,limit)
     servicePublication.getPublications({ pageNumber: page, limit: limit, sorting: sorting_tab })((err, publications) => {
       if (err) {
         if(req.app.locals.t!==undefined && req.app.locals.t['ERRORS'] !==undefined && req.app.locals.t['ERRORS']['PUBS_ERROR'] !==undefined){
