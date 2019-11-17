@@ -13,7 +13,7 @@ const renderPublication =  (req, res, next) => {
   let limit = req.query.limit
   let order_by = req.query.order_by
   let sort_by = req.query.sort_by
-  if (!page) page = 1
+  if (req.post || !page) page = 1
   if (!limit) limit = 10
   if (order_by === undefined) order_by = "desc"
   if (sort_by === undefined) sort_by = "date"
@@ -39,6 +39,7 @@ router.post('/',(req, res, next) => {
     url:url,
     form:req.body
   }
+  req.post=true;
   request.post(option, (err, resultat, body) => {
     if (err) {
       next(err)

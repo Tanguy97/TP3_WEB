@@ -110,6 +110,7 @@ const getPublications = db => pagingOpts => callback => {
  */
 const createPublication = db => publication => callback => {
   // À COMPLÉTER
+  publication.month= parseInt(publication.month)+1
   db.collection('publications').insert(publication, (err, publication) => {
     if (err) callback(err, null)
     else callback(null, publication)
