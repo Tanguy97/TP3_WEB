@@ -9,7 +9,8 @@ module.exports = serviceFeed => {
     if(langue===undefined){
       langue = 'fr'
     }
-    serviceFeed.getFeeds()(langue)((err,feeds)=>{
+    const date = new Date('2019-09')
+    serviceFeed.getFeeds(date)(langue)((err,feeds)=>{
       if(err){
         if(req.app.locals.t!=undefined && req.app.locals.t['ERRORS']!=undefined && req.app.locals.t['ERRORS']['FEEDS_ERROR']!=undefined){
           res.status(500).json({errors: [req.app.locals.t['ERRORS']['FEEDS_ERROR']]})

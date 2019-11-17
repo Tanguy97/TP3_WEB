@@ -31,6 +31,7 @@ const getSeminars = db => query => language => callback => {
       callback(err,null)
     }
     else {
+      console.log(sem.date)
       const seminars = sem.map(s=>{
         const translatedTitle = getTranslation(language, s.title)
         const translatedDescription = getTranslation(language, s.description)
@@ -45,7 +46,11 @@ const getSeminars = db => query => language => callback => {
           createdAt: newCreatedAtDate
         }
       })
-      callback(null,seminars)
+      if (query !== undefined && query.from !== undefined) {
+        callback(null,seminars.filter(s => s.date > query.from))
+      } else {
+        callback(null,seminars)
+      }
     }
   }))
 }

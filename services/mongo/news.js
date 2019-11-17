@@ -32,7 +32,7 @@ const getNews = db => language => callback => {
           createdAt: newCreatedAtDate
         }
       })
-      .filter(s => s.text.length>0)
+      //.filter(s => s.text.length>0)
       callback(null, news)
     }
   })

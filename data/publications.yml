@@ -104,7 +104,7 @@ Knowledge base in French"
   title: "Assessing the Quality of Domain Concepts Descriptions in DBpedia"
   venue: "12th International Conference on Signal Image Technology & Internet Based Systems, Bangkok, p. 254-261"
 
-- key: deniger2015
+- key: deniger2015b
   year: 2015
   month: 11
   authors: [Christophe Deniger, Alphonsine Beauchamps, Michel Deslauriers]
@@ -118,7 +118,7 @@ Knowledge base in French"
   title: "An Assessment of Online Semantic Annotators for the Keyword Extraction Task"
   venue: "The 13rd Pacific Rim Internationl Conference on Artificial Intelligence, Gold Coast, Australia."
 
-- key: paquin2014
+- key: paquin2014a
   year: 2014
   month: 6
   authors: [Laurent Paquin, Catherine Levac, Jean-Marc Parent and Michel Deslauriers]
@@ -137,7 +137,7 @@ Knowledge base in French"
   title: "Improving Entity Linking using Surface Form Refinement"
   venue: "9th edition of the Language Resources and Evaluation Conference,  Reykjavik, Iceland"
 
-- key: paquin2014
+- key: paquin2014b
   year: 2014
   authors: [Laurent Paquin, Catherine Levac, Jean-Marc Parent, Michel Deslauriers]
   title: "Using Collaborative Tagging for Text Classification to Opinion Mining"
@@ -233,7 +233,7 @@ Knowledge base in French"
   title: "Development of an Ontology-Based  E-Recruitment Application That Integrates Social Web"
   venue: "Electronic Business Interoperability: Concepts, Opportunities, and Challenges, Ejub Kajan (ed.), IGI Global"
 
-- key: paquin2011
+- key: paquin2011a
   year: 2011
   authors: [Laurent Paquin, Michel Deslauriers]
   title: "Poly-co: a multilayer perceptron approach for coreference detection"
@@ -245,15 +245,14 @@ Knowledge base in French"
   title: "Didactic and theoretical-based perspectives in the experimental development of an intelligent tutorial system for the learning of geometry"
   venue: "ZDM, The International Journal on Mathematics Education, vol.43, no.3, p.425-439"
 
-- key: paquin2011
+- key: paquin2011b
   year: 2011
   authors: [Laurent Paquin, Michel Deslauriers, Mike Ward]
   title: "Automatic Semantic Web annotation of named entities"
   venue: "Canadian Conference on Artificial Intelligence 2011, St. John's, Newfoundland and Labrador"
 
-- key: paquin2011
+- key: paquin2011c
   year: 2011
   authors: [Laurent Paquin, Michel Deslauriers, Mike Ward]
   title: "Génération automatique de motifs de détection d’entités nommées en utilisant des contenus encyclopédiques"
   venue: "TALN 2010, Montpellier"
-
