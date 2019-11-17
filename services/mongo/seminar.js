@@ -31,7 +31,6 @@ const getSeminars = db => query => language => callback => {
       callback(err,null)
     }
     else {
-      console.log(sem.date)
       const seminars = sem.map(s=>{
         const translatedTitle = getTranslation(language, s.title)
         const translatedDescription = getTranslation(language, s.description)
